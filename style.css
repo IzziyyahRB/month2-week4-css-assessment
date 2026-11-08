@@ -1,21 +1,17 @@
-/* =========================================================
-   Scissor landing page
-   Built from the Figma file "AltSchoolV2-Exam".
-   Sections follow the same order as the Figma frames.
-   ========================================================= */
+/* Scissor landing page */
 
-/* ---------- 1. Design tokens (copied from the Figma styles) ---------- */
+/* ---------- 1. Design tokens ---------- */
 :root {
-  --blue-base: #0065fe;   /* Primary/300 - base */
-  --blue-400: #005ae2;    /* Primary/400 */
-  --blue-200: #4991ff;    /* Primary/200 */
-  --blue-100: #3284ff;    /* Primary/100 */
-  --blue-tint: #e5effe;   /* light circle behind feature icons */
-  --text: #141414;        /* Text Color/Main text */
+  --blue-base: #0065fe; /* Primary/300 - base */
+  --blue-400: #005ae2; /* Primary/400 */
+  --blue-200: #4991ff; /* Primary/200 */
+  --blue-100: #3284ff; /* Primary/100 */
+  --blue-tint: #e5effe; /* light circle behind feature icons */
+  --text: #141414; /* Text Color/Main text */
   --neutral-900: #071827;
   --neutral-800: #112232;
-  --navy: #1e3448;        /* dark sections + featured price card */
-  --border: #d6d6d6;      /* FAQ dividers */
+  --navy: #1e3448; /* dark sections + featured price card */
+  --border: #d6d6d6; /* FAQ dividers */
   --stats-bg: #f9fbfd;
   --white: #ffffff;
 
@@ -38,7 +34,7 @@ html {
 
 body {
   font-family: var(--font);
-  font-weight: 500; /* Gilroy Medium is the default text weight in the design */
+  font-weight: 500;
   color: var(--text);
   background: var(--white);
   overflow-x: hidden;
@@ -91,7 +87,10 @@ ul {
   font-weight: 600;
   line-height: 12px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
 }
 
 .btn:hover {
@@ -137,7 +136,7 @@ ul {
   text-decoration: underline;
 }
 
-/* Section headings with the thin vertical bar on the left ("Line 70" in Figma) */
+/* Section headings with the thin vertical bar on the left  */
 .section-title {
   position: relative;
   display: inline-block;
@@ -196,7 +195,11 @@ ul {
   position: absolute;
   z-index: -1;
   border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
-  background: linear-gradient(160deg, rgba(43, 98, 150, 0.85), rgba(60, 106, 130, 0.35));
+  background: linear-gradient(
+    160deg,
+    rgba(43, 98, 150, 0.85),
+    rgba(60, 106, 130, 0.35)
+  );
   opacity: 0.6;
 }
 
@@ -216,9 +219,7 @@ ul {
   transform: rotate(22deg);
 }
 
-/* =========================================================
-   4. HEADER + HERO
-   ========================================================= */
+/* 4. HEADER + HERO */
 .hero {
   position: relative;
   min-height: 1024px;
@@ -234,9 +235,21 @@ ul {
   height: 900px;
   z-index: -2;
   background:
-    radial-gradient(260px 260px at 20% 25%, rgba(255, 215, 215, 0.45), transparent 70%),
-    radial-gradient(300px 280px at 42% 22%, rgba(255, 236, 214, 0.5), transparent 70%),
-    radial-gradient(360px 360px at 85% 45%, rgba(255, 245, 205, 0.6), transparent 70%);
+    radial-gradient(
+      260px 260px at 20% 25%,
+      rgba(255, 215, 215, 0.45),
+      transparent 70%
+    ),
+    radial-gradient(
+      300px 280px at 42% 22%,
+      rgba(255, 236, 214, 0.5),
+      transparent 70%
+    ),
+    radial-gradient(
+      360px 360px at 85% 45%,
+      rgba(255, 245, 205, 0.6),
+      transparent 70%
+    );
   filter: blur(40px);
 }
 
@@ -328,7 +341,7 @@ ul {
 
 .hero__text {
   max-width: 781px;
-  margin-top: -24px; /* design spacing between title and text is 8px */
+  margin-top: -24px;
   font-size: 18px;
   line-height: 28px;
 }
@@ -345,7 +358,7 @@ ul {
   width: 768px;
   max-width: calc(100% - 32px);
   margin: 80px auto 0;
-  transform: translateX(98px); /* the card sits slightly right of centre in the design */
+  transform: translateX(98px);
 }
 
 .hero__blob {
@@ -355,8 +368,9 @@ ul {
   width: 246px;
   height: 258px;
   z-index: -1;
-  /* Vector exported from Figma ("Vector 2") */
-  background: url("assets/icons/shapes/hero-blob.svg") no-repeat center / contain;
+  /* Vector exported from Figma */
+  background: url("assets/icons/shapes/hero-blob.svg") no-repeat center /
+    contain;
 }
 
 .hero__card {
@@ -417,12 +431,11 @@ ul {
   max-width: 90%;
   height: 57px;
   margin: 20px auto 0;
-  background: url("assets/icons/shapes/hero-ellipse.svg") no-repeat center / 100% 100%;
+  background: url("assets/icons/shapes/hero-ellipse.svg") no-repeat center /
+    100% 100%;
 }
 
-/* =========================================================
-   5. STATS + FEATURES
-   ========================================================= */
+/* 5. STATS + FEATURES */
 .stats {
   display: flex;
   align-items: center;
@@ -519,9 +532,7 @@ ul {
   line-height: 24px;
 }
 
-/* =========================================================
-   6. PRICING
-   ========================================================= */
+/* 6. PRICING */
 .pricing {
   padding: 42px 16px 112px;
 }
@@ -638,9 +649,7 @@ ul {
   margin-top: 68px;
 }
 
-/* =========================================================
-   7. URL SHORTENER FORM
-   ========================================================= */
+/* 7. URL SHORTENER FORM */
 .shorten {
   display: flex;
   align-items: center;
@@ -649,7 +658,7 @@ ul {
   padding: 80px 16px;
 }
 
-/* Vectors exported from Figma ("Desktop - 11"), replacing the generic .dark-bg blobs */
+/* Vectors exported from Figma */
 .shorten::before,
 .shorten::after {
   top: 0;
@@ -721,7 +730,8 @@ ul {
   -webkit-appearance: none;
   color: var(--blue-100);
   cursor: pointer;
-  background: var(--white) url("assets/icons/chevron-down-blue.svg") no-repeat right 14px center / 24px;
+  background: var(--white) url("assets/icons/chevron-down-blue.svg") no-repeat
+    right 14px center / 24px;
 }
 
 .shorten__row {
@@ -751,9 +761,7 @@ ul {
   color: var(--blue-100);
 }
 
-/* =========================================================
-   8. FAQs
-   ========================================================= */
+/* 8. FAQs */
 .faqs {
   position: relative;
   overflow: hidden;
@@ -762,7 +770,7 @@ ul {
   isolation: isolate;
 }
 
-/* Vectors exported from Figma ("FAQs") */
+/* Vectors exported from Figma */
 .faqs::before,
 .faqs::after {
   content: "";
@@ -811,7 +819,7 @@ ul {
   font-size: 20px;
   line-height: 32px;
   cursor: pointer;
-  list-style: none; /* hide the default triangle */
+  list-style: none;
 }
 
 .faqs__list summary::-webkit-details-marker {
@@ -836,9 +844,7 @@ ul {
   line-height: 32px;
 }
 
-/* =========================================================
-   9. CTA BANNER
-   ========================================================= */
+/* 9. CTA BANNER */
 .cta {
   display: flex;
   flex-direction: column;
@@ -850,7 +856,7 @@ ul {
   text-align: center;
 }
 
-/* Vectors exported from Figma ("Frame 1000001649"), replacing the generic .dark-bg blobs */
+/* Vectors exported from Figma */
 .cta::before,
 .cta::after {
   top: 0;
@@ -888,9 +894,7 @@ ul {
   background: var(--blue-400);
 }
 
-/* =========================================================
-   10. FOOTER
-   ========================================================= */
+/* 10. FOOTER */
 .footer {
   position: relative;
   overflow: hidden;
@@ -898,7 +902,7 @@ ul {
   isolation: isolate;
 }
 
-/* Vectors exported from Figma ("footer") */
+/* Vectors exported from Figma */
 .footer::before,
 .footer::after {
   content: "";
@@ -960,10 +964,19 @@ ul {
   gap: 56px;
 }
 
-.footer__col:nth-child(1) { width: 180px; }
-.footer__col:nth-child(2) { width: 201px; gap: 31px; }
-.footer__col:nth-child(3) { width: 211px; }
-.footer__col:nth-child(4) { width: 148px; }
+.footer__col:nth-child(1) {
+  width: 180px;
+}
+.footer__col:nth-child(2) {
+  width: 201px;
+  gap: 31px;
+}
+.footer__col:nth-child(3) {
+  width: 211px;
+}
+.footer__col:nth-child(4) {
+  width: 148px;
+}
 
 .footer__group {
   padding: 0 24px;
@@ -1006,9 +1019,7 @@ ul {
   background: var(--neutral-800);
 }
 
-/* =========================================================
-   11. RESPONSIVE
-   ========================================================= */
+/* 11. RESPONSIVE */
 
 /* Laptops / small desktops */
 @media (max-width: 1240px) {
