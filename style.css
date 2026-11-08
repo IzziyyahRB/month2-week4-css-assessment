@@ -1,0 +1,1294 @@
+/* =========================================================
+   Scissor landing page
+   Built from the Figma file "AltSchoolV2-Exam".
+   Sections follow the same order as the Figma frames.
+   ========================================================= */
+
+/* ---------- 1. Design tokens (copied from the Figma styles) ---------- */
+:root {
+  --blue-base: #0065fe;   /* Primary/300 - base */
+  --blue-400: #005ae2;    /* Primary/400 */
+  --blue-200: #4991ff;    /* Primary/200 */
+  --blue-100: #3284ff;    /* Primary/100 */
+  --blue-tint: #e5effe;   /* light circle behind feature icons */
+  --text: #141414;        /* Text Color/Main text */
+  --neutral-900: #071827;
+  --neutral-800: #112232;
+  --navy: #1e3448;        /* dark sections + featured price card */
+  --border: #d6d6d6;      /* FAQ dividers */
+  --stats-bg: #f9fbfd;
+  --white: #ffffff;
+
+  --font: "Gilroy", "Urbanist", system-ui, sans-serif;
+  --container: 1200px;
+}
+
+/* ---------- 2. Reset / base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 500; /* Gilroy Medium is the default text weight in the design */
+  color: var(--text);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.text-blue {
+  color: var(--blue-400);
+}
+
+/* Hides labels visually but keeps them for screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- 3. Reusable pieces ---------- */
+
+/* Pill buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 200px;
+  height: 48px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  background: var(--blue-base);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  background: var(--blue-400);
+}
+
+.btn--outline {
+  border-color: var(--blue-base);
+  color: var(--blue-base);
+}
+
+.btn--outline:hover {
+  background: var(--blue-base);
+  color: var(--white);
+}
+
+.btn--sm {
+  width: 142px;
+  height: 44px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* Text-only blue link ("Log in", "Learn more") */
+.link-btn {
+  color: var(--blue-base);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+/* Section headings with the thin vertical bar on the left ("Line 70" in Figma) */
+.section-title {
+  position: relative;
+  display: inline-block;
+  padding-left: 16px;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 48px;
+  background: linear-gradient(180deg, var(--text) 0%, rgba(20, 20, 20, 0) 100%);
+}
+
+/* Logo (used in header and footer) */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  color: var(--blue-base);
+}
+
+.logo__divider {
+  width: 1px;
+  height: 24px;
+  background: currentColor;
+}
+
+.logo__text {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.logo--dark {
+  color: var(--text);
+}
+
+/* Navy background with soft wavy shapes (form section + CTA banner) */
+.dark-bg {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+  isolation: isolate;
+}
+
+.dark-bg::before,
+.dark-bg::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+  background: linear-gradient(160deg, rgba(43, 98, 150, 0.85), rgba(60, 106, 130, 0.35));
+  opacity: 0.6;
+}
+
+.dark-bg::before {
+  width: 560px;
+  height: 760px;
+  left: -180px;
+  top: -340px;
+  transform: rotate(-35deg);
+}
+
+.dark-bg::after {
+  width: 520px;
+  height: 640px;
+  right: -160px;
+  bottom: -460px;
+  transform: rotate(22deg);
+}
+
+/* =========================================================
+   4. HEADER + HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: 1024px;
+  overflow: hidden;
+  background: var(--white);
+  isolation: isolate;
+}
+
+/* Blurred pastel glow at the top */
+.hero__aurora {
+  position: absolute;
+  inset: -200px 0 auto 0;
+  height: 900px;
+  z-index: -2;
+  background:
+    radial-gradient(260px 260px at 20% 25%, rgba(255, 215, 215, 0.45), transparent 70%),
+    radial-gradient(300px 280px at 42% 22%, rgba(255, 236, 214, 0.5), transparent 70%),
+    radial-gradient(360px 360px at 85% 45%, rgba(255, 245, 205, 0.6), transparent 70%);
+  filter: blur(40px);
+}
+
+/* Navigation bar */
+.navbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding-top: 12px;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  margin-left: 140px;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navbar__links a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar__links a:hover,
+.navbar__links a.active {
+  color: var(--blue-base);
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Mobile menu controls are hidden on desktop */
+.navbar__toggle,
+.navbar__burger {
+  display: none;
+}
+
+/* Hero text */
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  max-width: 948px;
+  margin: 106px auto 0; /* 162px from the top of the frame, minus the navbar */
+  text-align: center;
+}
+
+.hero__title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 96px;
+}
+
+/* Blue brush-stroke under "URL Shortening" */
+.hero__highlight {
+  position: relative;
+  display: inline-block;
+}
+
+.hero__highlight::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 174px;
+  height: 20px;
+  transform: translateX(-50%);
+  background: url("assets/icons/underline.svg") no-repeat center / contain;
+}
+
+.hero__text {
+  max-width: 781px;
+  margin-top: -24px; /* design spacing between title and text is 8px */
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.hero__buttons {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+}
+
+/* Glass card with link icons */
+.hero__card-wrap {
+  position: relative;
+  width: 768px;
+  max-width: calc(100% - 32px);
+  margin: 80px auto 0;
+  transform: translateX(98px); /* the card sits slightly right of centre in the design */
+}
+
+.hero__blob {
+  position: absolute;
+  left: 30px;
+  top: -18px;
+  width: 246px;
+  height: 258px;
+  z-index: -1;
+  /* Vector exported from Figma ("Vector 2") */
+  background: url("assets/icons/shapes/hero-blob.svg") no-repeat center / contain;
+}
+
+.hero__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 60px;
+  border: 0.5px solid var(--blue-400);
+  border-radius: 24px;
+  background: rgba(254, 254, 254, 0.1);
+  backdrop-filter: blur(106px);
+  -webkit-backdrop-filter: blur(106px);
+  text-align: center;
+}
+
+.hero__links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  align-self: flex-start;
+}
+
+.hero__chain {
+  display: flex;
+}
+
+/* Overlap the link icons so they look like one long chain */
+.hero__chain img + img {
+  margin-left: -8px;
+}
+
+.hero__card p {
+  max-width: 400px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.hero__card strong {
+  font-weight: 600;
+}
+
+/* Grey stage with an oval at the bottom of the hero */
+.hero__stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 93px;
+  z-index: -1;
+  background: linear-gradient(180deg, #f3f4f6 0%, #fafbfc 100%);
+  clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%);
+}
+
+/* Ellipse exported from Figma ("Ellipse 1"); the 964×57 file includes its drop shadow */
+.hero__stage-ellipse {
+  width: 964px;
+  max-width: 90%;
+  height: 57px;
+  margin: 20px auto 0;
+  background: url("assets/icons/shapes/hero-ellipse.svg") no-repeat center / 100% 100%;
+}
+
+/* =========================================================
+   5. STATS + FEATURES
+   ========================================================= */
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 120px;
+  padding: 60px 140px;
+  background: var(--stats-bg);
+}
+
+.stats__title {
+  min-width: 337px;
+  white-space: nowrap;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.stats__list {
+  display: flex;
+  align-items: flex-start;
+  gap: 72px;
+}
+
+.stats__list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 0 0 auto;
+  max-width: 143px;
+}
+
+.stats__list strong {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.stats__list span {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.features {
+  display: flex;
+  align-items: flex-start;
+  gap: 96px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 128px 0 130px;
+}
+
+.features__intro {
+  flex: 0 0 398px;
+}
+
+.features__intro .section-title {
+  line-height: 48px;
+  white-space: nowrap;
+}
+
+.features__intro p {
+  margin-top: 16px;
+  padding-left: 28px;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 340px);
+  column-gap: 28px;
+  row-gap: 64px;
+}
+
+.feature__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 40px;
+  border-radius: 50%;
+  background: var(--blue-tint);
+}
+
+.feature h3 {
+  margin-bottom: 16px;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.feature p {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* =========================================================
+   6. PRICING
+   ========================================================= */
+.pricing {
+  padding: 42px 16px 112px;
+}
+
+.pricing__header {
+  max-width: 576px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing__header p {
+  max-width: 556px;
+  margin: 8px auto 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.pricing__cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 68px;
+}
+
+.price-card {
+  position: relative;
+  width: 379px;
+  height: 455px;
+  padding: 24px 40px 0 87px;
+  border: 0.4px solid var(--blue-400);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Side cards tuck 40px under the featured card */
+.price-card--left {
+  margin-right: -40px;
+}
+
+.price-card--right {
+  margin-left: -40px;
+  padding-left: 86px;
+}
+
+.price-card--featured {
+  z-index: 2;
+  width: 410px;
+  height: 627px;
+  padding: 95px 40px 0 65px;
+  border: none;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.price-card__name {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.price-card__price {
+  margin-top: 34px;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.price-card--featured .price-card__price {
+  margin-top: 24px;
+}
+
+.price-card__tagline {
+  margin-top: 8px;
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.price-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.price-card--featured .price-card__list {
+  margin-top: 24px;
+}
+
+.price-card__list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+/* Check-circle icon before each feature */
+.price-card__list li::before {
+  content: "";
+  flex: 0 0 16px;
+  height: 16px;
+  background: url("assets/icons/check-blue.svg") no-repeat center / contain;
+}
+
+.price-card--featured .price-card__list li::before {
+  background-image: url("assets/icons/check-white.svg");
+}
+
+.pricing__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 68px;
+}
+
+/* =========================================================
+   7. URL SHORTENER FORM
+   ========================================================= */
+.shorten {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 523px;
+  padding: 80px 16px;
+}
+
+/* Vectors exported from Figma ("Desktop - 11"), replacing the generic .dark-bg blobs */
+.shorten::before,
+.shorten::after {
+  top: 0;
+  bottom: auto;
+  height: 100%;
+  border-radius: 0;
+  opacity: 1;
+  transform: none;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.shorten::before {
+  left: 0;
+  width: 979px;
+  background-image: url("assets/icons/shapes/shorten-left.svg");
+  background-position: left top;
+}
+
+.shorten::after {
+  right: 0;
+  width: 926px;
+  background-image: url("assets/icons/shapes/shorten-right.svg");
+  background-position: right top;
+}
+
+.shorten__form {
+  display: flex;
+  flex-direction: column;
+  width: 476px;
+  max-width: 100%;
+  padding: 42px;
+  border-radius: 12px;
+  background: var(--white);
+}
+
+.field {
+  width: 100%;
+  height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--blue-100);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.field::placeholder {
+  color: var(--blue-100);
+  font-size: 12px;
+}
+
+.field:focus {
+  box-shadow: 0 0 0 3px rgba(50, 132, 255, 0.2);
+}
+
+.field--tall {
+  height: 55px;
+}
+
+/* Custom arrow on the dropdown */
+.field--select {
+  padding: 0 44px 0 20px;
+  appearance: none;
+  -webkit-appearance: none;
+  color: var(--blue-100);
+  cursor: pointer;
+  background: var(--white) url("assets/icons/chevron-down-blue.svg") no-repeat right 14px center / 24px;
+}
+
+.shorten__row {
+  display: grid;
+  grid-template-columns: 202fr 178fr;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.shorten__form .btn {
+  height: 48px;
+  margin-top: 24px;
+  background: var(--blue-400);
+  font-size: 14px;
+}
+
+.shorten__terms {
+  margin-top: 12px;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--blue-200);
+}
+
+.shorten__terms a {
+  font-weight: 700;
+  color: var(--blue-100);
+}
+
+/* =========================================================
+   8. FAQs
+   ========================================================= */
+.faqs {
+  position: relative;
+  overflow: hidden;
+  padding: 43px 16px 155px;
+  text-align: center;
+  isolation: isolate;
+}
+
+/* Vectors exported from Figma ("FAQs") */
+.faqs::before,
+.faqs::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.faqs::before {
+  top: 0;
+  left: 0;
+  width: 350px;
+  height: 860px;
+  background-image: url("assets/icons/shapes/faq-left.svg");
+}
+
+.faqs::after {
+  right: 0;
+  bottom: 0;
+  width: 374px;
+  height: 439px;
+  background-image: url("assets/icons/shapes/faq-right.svg");
+}
+
+.faqs__list {
+  max-width: 792px;
+  margin: 64px auto 0;
+  text-align: left;
+}
+
+.faqs__list details {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.faqs__list details + details {
+  margin-top: 32px;
+}
+
+.faqs__list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 20px;
+  line-height: 32px;
+  cursor: pointer;
+  list-style: none; /* hide the default triangle */
+}
+
+.faqs__list summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Plus icon when closed, minus icon when open */
+.faqs__list summary::after {
+  content: "";
+  flex: 0 0 24px;
+  height: 24px;
+  background: url("assets/icons/plus.svg") no-repeat center / contain;
+}
+
+.faqs__list details[open] summary::after {
+  background-image: url("assets/icons/minus.svg");
+}
+
+.faqs__list details p {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 32px;
+}
+
+/* =========================================================
+   9. CTA BANNER
+   ========================================================= */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  min-height: 299px;
+  padding: 60px 16px;
+  text-align: center;
+}
+
+/* Vectors exported from Figma ("Frame 1000001649"), replacing the generic .dark-bg blobs */
+.cta::before,
+.cta::after {
+  top: 0;
+  bottom: auto;
+  height: 100%;
+  border-radius: 0;
+  opacity: 1;
+  transform: none;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.cta::before {
+  left: 0;
+  width: 668px;
+  background-image: url("assets/icons/shapes/cta-left.svg");
+  background-position: left top;
+}
+
+.cta::after {
+  right: 0;
+  width: 579px;
+  background-image: url("assets/icons/shapes/cta-right.svg");
+  background-position: right top;
+}
+
+.cta h2 {
+  color: var(--white);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.cta .btn {
+  background: var(--blue-400);
+}
+
+/* =========================================================
+   10. FOOTER
+   ========================================================= */
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding: 95px 16px 39px;
+  isolation: isolate;
+}
+
+/* Vectors exported from Figma ("footer") */
+.footer::before,
+.footer::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.footer::before {
+  left: 0;
+  width: 508px;
+  height: 541px;
+  background-image: url("assets/icons/shapes/footer-left.svg");
+}
+
+.footer::after {
+  right: 0;
+  width: 543px;
+  height: 358px;
+  background-image: url("assets/icons/shapes/footer-right.svg");
+}
+
+.footer__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 39px;
+  max-width: 1035px;
+  margin: 0 auto;
+}
+
+.footer__brand {
+  flex: 0 0 184px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 24px;
+  padding: 0 8px 0 16px;
+}
+
+.footer__socials a:hover {
+  opacity: 0.7;
+}
+
+.footer__columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.footer__col:nth-child(1) { width: 180px; }
+.footer__col:nth-child(2) { width: 201px; gap: 31px; }
+.footer__col:nth-child(3) { width: 211px; }
+.footer__col:nth-child(4) { width: 148px; }
+
+.footer__group {
+  padding: 0 24px;
+}
+
+.footer__group h4 {
+  margin-bottom: 8px;
+  color: var(--neutral-900);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.footer__group a {
+  color: var(--neutral-800);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.footer__group a:hover {
+  color: var(--blue-base);
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: 1186px;
+  margin: 18px auto 0;
+  padding: 0 12px;
+  color: var(--neutral-800);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.footer__sep {
+  width: 1px;
+  height: 12px;
+  background: var(--neutral-800);
+}
+
+/* =========================================================
+   11. RESPONSIVE
+   ========================================================= */
+
+/* Laptops / small desktops */
+@media (max-width: 1240px) {
+  .navbar,
+  .features,
+  .footer__inner {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .navbar__menu {
+    margin-left: 60px;
+  }
+
+  .stats {
+    gap: 64px;
+    padding: 60px 32px;
+  }
+
+  .stats__list {
+    gap: 40px;
+  }
+
+  .features {
+    gap: 56px;
+  }
+
+  .features__intro {
+    flex-basis: 320px;
+  }
+
+  .features__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero__card-wrap {
+    transform: none;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  /* Mobile menu */
+  .navbar {
+    padding: 12px 24px 0;
+  }
+
+  .navbar__burger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .navbar__menu {
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    right: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 8px 0 0;
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--white);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .navbar__toggle:checked ~ .navbar__menu {
+    display: flex;
+  }
+
+  .navbar__links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-bottom: 140px;
+  }
+
+  .hero__content {
+    margin-top: 72px;
+    padding: 0 24px;
+  }
+
+  .hero__title {
+    font-size: 40px;
+    line-height: 64px;
+  }
+
+  .hero__text {
+    margin-top: -16px;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 48px 32px;
+  }
+
+  .stats__list {
+    flex-wrap: wrap;
+  }
+
+  .features {
+    flex-direction: column;
+    padding: 80px 32px;
+  }
+
+  .features__intro {
+    flex-basis: auto;
+  }
+
+  /* Stack the price cards; the featured one first */
+  .pricing__cards {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .price-card,
+  .price-card--featured {
+    width: 100%;
+    max-width: 410px;
+    height: auto;
+    margin: 0;
+    padding: 32px 40px 40px;
+  }
+
+  .price-card--featured {
+    order: -1;
+  }
+
+  .footer__columns {
+    flex-wrap: wrap;
+    row-gap: 40px;
+  }
+
+  .footer__bottom {
+    justify-content: flex-start;
+    padding-left: 32px;
+  }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+  .navbar {
+    padding: 12px 16px 0;
+  }
+
+  .hero__title {
+    font-size: 32px;
+    line-height: 48px;
+  }
+
+  .hero__highlight::after {
+    width: 140px;
+    bottom: -6px;
+  }
+
+  .hero__text {
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .hero__buttons {
+    gap: 32px;
+  }
+
+  .hero__card {
+    padding: 28px 20px;
+  }
+
+  .hero__links {
+    align-self: center;
+    gap: 10px;
+  }
+
+  .hero__links img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hero__links img[src*="arrow"] {
+    width: 28px;
+    height: 10px;
+  }
+
+  .section-title,
+  .stats__title,
+  .cta h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .stats {
+    padding: 40px 16px;
+  }
+
+  .stats__title {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .features__intro .section-title {
+    white-space: normal;
+  }
+
+  .stats__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 32px;
+  }
+
+  .features {
+    padding: 64px 16px;
+  }
+
+  .features__intro p {
+    padding-left: 16px;
+  }
+
+  .features__grid {
+    grid-template-columns: 1fr;
+    row-gap: 48px;
+  }
+
+  .feature__icon {
+    margin-bottom: 24px;
+  }
+
+  .feature h3 {
+    font-size: 26px;
+  }
+
+  .price-card,
+  .price-card--featured {
+    padding: 28px 24px 32px;
+  }
+
+  .pricing__buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .shorten__form {
+    padding: 24px;
+  }
+
+  .shorten__row {
+    grid-template-columns: 1fr;
+  }
+
+  .faqs__list summary {
+    font-size: 17px;
+    line-height: 26px;
+  }
+
+  .footer__inner {
+    padding: 0;
+  }
+
+  .footer__col {
+    width: 100% !important;
+  }
+
+  .footer__group {
+    padding: 0 8px;
+  }
+
+  .footer__bottom {
+    flex-wrap: wrap;
+    padding-left: 8px;
+  }
+}
